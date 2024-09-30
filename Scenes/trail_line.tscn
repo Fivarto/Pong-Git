@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://coonxesn7hhu5"]
+
+[ext_resource type="Script" path="res://Scripts/line_2d.gd" id="1_j57aw"]
+
+[sub_resource type="Curve" id="Curve_pnvya"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_dw6ev"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0.247059, 0.494118)
+
+[node name="Line2D" type="Line2D"]
+width = 15.0
+width_curve = SubResource("Curve_pnvya")
+gradient = SubResource("Gradient_dw6ev")
+script = ExtResource("1_j57aw")
+max_lenght = 20

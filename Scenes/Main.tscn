@@ -1,0 +1,276 @@
+[gd_scene load_steps=24 format=3 uid="uid://dn1svo64gv1cm"]
+
+[ext_resource type="Texture2D" uid="uid://nr7rktnsh3fe" path="res://Assets/BG-Base.png" id="1_50orh"]
+[ext_resource type="Texture2D" uid="uid://5i7ktlb6qs1u" path="res://Assets/Paddle.png" id="2_7bwke"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="2_do01b"]
+[ext_resource type="Script" path="res://Scripts/player_paddle.gd" id="3_d4p7e"]
+[ext_resource type="Texture2D" uid="uid://ibk7l56g67bx" path="res://Assets/Ball.png" id="3_ew6f1"]
+[ext_resource type="FontFile" uid="uid://drxorkkc4esh0" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="4_dqlsp"]
+[ext_resource type="Script" path="res://Scripts/cpu.gd" id="5_06acu"]
+[ext_resource type="Script" path="res://Scripts/ball.gd" id="5_dk22d"]
+[ext_resource type="Script" path="res://Scripts/trail_effect_ball.gd" id="8_gsmwm"]
+[ext_resource type="AudioStream" uid="uid://bpsqp0ex2lg8h" path="res://Assets/sfx/hit_sound.wav" id="9_gknsv"]
+[ext_resource type="Texture2D" uid="uid://dnw7soktnd5q8" path="res://Assets/score_board.png" id="10_nxx4l"]
+[ext_resource type="Texture2D" uid="uid://coswjkc2kxbwp" path="res://Assets/button_base_sprite.png" id="12_bv8n1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57iq4"]
+size = Vector2(22, 138)
+
+[sub_resource type="Curve" id="Curve_vj2ug"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_nqndx"]
+colors = PackedColorArray(0.937255, 0.67451, 0.156863, 1, 0.937255, 0.67451, 0.156863, 0.435294)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5eoq"]
+radius = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xtukc"]
+size = Vector2(1152, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wya8"]
+size = Vector2(1152, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76x3h"]
+size = Vector2(62, 648)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s34a3"]
+size = Vector2(55, 648)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_s3ani"]
+texture = ExtResource("12_bv8n1")
+modulate_color = Color(0.876177, 0.657391, 0.53714, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ishug"]
+texture = ExtResource("12_bv8n1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yt3b0"]
+texture = ExtResource("12_bv8n1")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+
+[node name="Campo-BG" type="Sprite2D"]
+z_index = -10
+texture = ExtResource("1_50orh")
+centered = false
+script = ExtResource("2_do01b")
+
+[node name="Player-Paddle" type="StaticBody2D" parent="."]
+position = Vector2(50, 324)
+script = ExtResource("3_d4p7e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player-Paddle"]
+texture = ExtResource("2_7bwke")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player-Paddle"]
+shape = SubResource("RectangleShape2D_57iq4")
+
+[node name="CPU" type="StaticBody2D" parent="."]
+position = Vector2(1102, 324)
+script = ExtResource("5_06acu")
+
+[node name="Sprite2D" type="Sprite2D" parent="CPU"]
+texture = ExtResource("2_7bwke")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CPU"]
+shape = SubResource("RectangleShape2D_57iq4")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+z_as_relative = false
+position = Vector2(576, 324)
+collision_mask = 3
+script = ExtResource("5_dk22d")
+
+[node name="trail_line" type="Line2D" parent="Ball"]
+top_level = true
+z_index = -2
+z_as_relative = false
+width = 15.0
+width_curve = SubResource("Curve_vj2ug")
+gradient = SubResource("Gradient_nqndx")
+script = ExtResource("8_gsmwm")
+max_lenght = 8
+
+[node name="sprite_ball" type="Sprite2D" parent="Ball"]
+texture = ExtResource("3_ew6f1")
+
+[node name="collision_2d_ball" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_i5eoq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Ball"]
+stream = ExtResource("9_gknsv")
+
+[node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="collision-2d-top" type="CollisionShape2D" parent="Border"]
+position = Vector2(576, -10)
+shape = SubResource("RectangleShape2D_xtukc")
+
+[node name="collision-2d-bottom" type="CollisionShape2D" parent="Border"]
+position = Vector2(576, 659)
+shape = SubResource("RectangleShape2D_1wya8")
+
+[node name="ScoreLeft" type="Area2D" parent="."]
+
+[node name="collision-2d-scoreLeft" type="CollisionShape2D" parent="ScoreLeft"]
+position = Vector2(-31, 324)
+shape = SubResource("RectangleShape2D_76x3h")
+
+[node name="ScoreRight" type="Area2D" parent="."]
+position = Vector2(1152, 0)
+
+[node name="collision-2d-scoreRight" type="CollisionShape2D" parent="ScoreRight"]
+position = Vector2(27.5, 324)
+shape = SubResource("RectangleShape2D_s34a3")
+
+[node name="Balltimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HUD" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD"]
+z_index = -3
+texture = ExtResource("10_nxx4l")
+offset = Vector2(576, 60)
+
+[node name="label-playerScore" type="Label" parent="HUD"]
+z_index = -3
+clip_contents = true
+offset_left = 516.0
+offset_top = 50.0
+offset_right = 556.0
+offset_bottom = 90.0
+pivot_offset = Vector2(20, 20)
+theme_override_colors/font_color = Color(0.647059, 0.54902, 0.152941, 1)
+theme_override_colors/font_shadow_color = Color(0.509804, 0.407843, 0.2, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_font_sizes/font_size = 40
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="HUD"]
+z_index = -3
+offset_left = 573.0
+offset_top = 40.0
+offset_right = 579.0
+offset_bottom = 92.0
+pivot_offset = Vector2(3, 26)
+color = Color(0.647059, 0.54902, 0.152941, 1)
+
+[node name="label-cpuScore" type="Label" parent="HUD"]
+z_index = -3
+offset_left = 596.0
+offset_top = 50.0
+offset_right = 636.0
+offset_bottom = 90.0
+pivot_offset = Vector2(20, 20)
+theme_override_colors/font_color = Color(0.647059, 0.54902, 0.152941, 1)
+theme_override_colors/font_shadow_color = Color(0.509804, 0.407843, 0.2, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_font_sizes/font_size = 40
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="canvas_win_screen" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="canvas_win_screen"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -40.0
+offset_right = 125.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="canvas_win_screen/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_font_sizes/font_size = 24
+text = "PARABÉNS VOCÊ GANHOU"
+
+[node name="button_restartGame" type="Button" parent="canvas_win_screen/VBoxContainer"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.647059, 0.384314, 0.262745, 1)
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_s3ani")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ishug")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yt3b0")
+text = "RESTART"
+metadata/_edit_group_ = true
+
+[node name="button_backToMenu" type="Button" parent="canvas_win_screen/VBoxContainer"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.647059, 0.384314, 0.262745, 1)
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_s3ani")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ishug")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yt3b0")
+text = "VOLTAR AO MENU"
+metadata/_edit_group_ = true
+
+[node name="canvas_gameMode" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="canvas_gameMode"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -82.0
+offset_right = 125.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="button_playerXcpu" type="Button" parent="canvas_gameMode/VBoxContainer"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.647059, 0.384314, 0.262745, 1)
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_s3ani")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ishug")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yt3b0")
+text = "P1 X CPU"
+metadata/_edit_group_ = true
+
+[node name="button_playerXplayer" type="Button" parent="canvas_gameMode/VBoxContainer"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.647059, 0.384314, 0.262745, 1)
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_s3ani")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ishug")
+theme_override_styles/normal = SubResource("StyleBoxTexture_yt3b0")
+text = "P1 X P2"
+metadata/_edit_group_ = true
+
+[connection signal="body_entered" from="ScoreLeft" to="." method="_on_score_left_body_entered"]
+[connection signal="body_entered" from="ScoreRight" to="." method="_on_score_right_body_entered"]
+[connection signal="timeout" from="Balltimer" to="." method="_on_balltimer_timeout"]
+[connection signal="pressed" from="canvas_win_screen/VBoxContainer/button_restartGame" to="." method="_on_button_restart_game_pressed"]
+[connection signal="pressed" from="canvas_win_screen/VBoxContainer/button_backToMenu" to="." method="_on_button_back_to_menu_pressed"]
+[connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXcpu" to="." method="_on_button_player_xcpu_pressed"]
+[connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXplayer" to="." method="_on_button_player_xplayer_pressed"]
