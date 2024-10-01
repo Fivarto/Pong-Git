@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnua3aurn2b7b"]
+
+[ext_resource type="Script" path="res://Scripts/slown_zone.gd" id="1_jx0bv"]
+[ext_resource type="Shader" path="res://Shaders/slown_zone.gdshader" id="2_8n2x8"]
+[ext_resource type="Texture2D" uid="uid://ibk7l56g67bx" path="res://Assets/Ball.png" id="3_3c41c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w32xq"]
+radius = 66.0681
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_33ueq"]
+shader = ExtResource("2_8n2x8")
+shader_parameter/color = Vector4(0, 0, 0, 0.5)
+shader_parameter/amplitude = 0.1
+shader_parameter/speed = 1.0
+shader_parameter/radius = 0.5
+
+[node name="StaticBody2D" type="Area2D"]
+visible = false
+script = ExtResource("1_jx0bv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w32xq")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_33ueq")
+scale = Vector2(3.83333, 3.83333)
+texture = ExtResource("3_3c41c")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

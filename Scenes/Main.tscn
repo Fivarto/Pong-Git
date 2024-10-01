@@ -1,30 +1,17 @@
-[gd_scene load_steps=24 format=3 uid="uid://dn1svo64gv1cm"]
+[gd_scene load_steps=18 format=3 uid="uid://dn1svo64gv1cm"]
 
 [ext_resource type="Texture2D" uid="uid://nr7rktnsh3fe" path="res://Assets/BG-Base.png" id="1_50orh"]
 [ext_resource type="Texture2D" uid="uid://5i7ktlb6qs1u" path="res://Assets/Paddle.png" id="2_7bwke"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="2_do01b"]
 [ext_resource type="Script" path="res://Scripts/player_paddle.gd" id="3_d4p7e"]
-[ext_resource type="Texture2D" uid="uid://ibk7l56g67bx" path="res://Assets/Ball.png" id="3_ew6f1"]
 [ext_resource type="FontFile" uid="uid://drxorkkc4esh0" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="4_dqlsp"]
 [ext_resource type="Script" path="res://Scripts/cpu.gd" id="5_06acu"]
-[ext_resource type="Script" path="res://Scripts/ball.gd" id="5_dk22d"]
-[ext_resource type="Script" path="res://Scripts/trail_effect_ball.gd" id="8_gsmwm"]
-[ext_resource type="AudioStream" uid="uid://bpsqp0ex2lg8h" path="res://Assets/sfx/hit_sound.wav" id="9_gknsv"]
+[ext_resource type="PackedScene" uid="uid://bnua3aurn2b7b" path="res://Scenes/slown_zone.tscn" id="9_l3ejk"]
 [ext_resource type="Texture2D" uid="uid://dnw7soktnd5q8" path="res://Assets/score_board.png" id="10_nxx4l"]
 [ext_resource type="Texture2D" uid="uid://coswjkc2kxbwp" path="res://Assets/button_base_sprite.png" id="12_bv8n1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_57iq4"]
 size = Vector2(22, 138)
-
-[sub_resource type="Curve" id="Curve_vj2ug"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_nqndx"]
-colors = PackedColorArray(0.937255, 0.67451, 0.156863, 1, 0.937255, 0.67451, 0.156863, 0.435294)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_i5eoq"]
-radius = 18.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xtukc"]
 size = Vector2(1152, 20)
@@ -78,31 +65,6 @@ texture = ExtResource("2_7bwke")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CPU"]
 shape = SubResource("RectangleShape2D_57iq4")
 
-[node name="Ball" type="CharacterBody2D" parent="."]
-z_as_relative = false
-position = Vector2(576, 324)
-collision_mask = 3
-script = ExtResource("5_dk22d")
-
-[node name="trail_line" type="Line2D" parent="Ball"]
-top_level = true
-z_index = -2
-z_as_relative = false
-width = 15.0
-width_curve = SubResource("Curve_vj2ug")
-gradient = SubResource("Gradient_nqndx")
-script = ExtResource("8_gsmwm")
-max_lenght = 8
-
-[node name="sprite_ball" type="Sprite2D" parent="Ball"]
-texture = ExtResource("3_ew6f1")
-
-[node name="collision_2d_ball" type="CollisionShape2D" parent="Ball"]
-shape = SubResource("CircleShape2D_i5eoq")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Ball"]
-stream = ExtResource("9_gknsv")
-
 [node name="Border" type="StaticBody2D" parent="."]
 collision_layer = 2
 
@@ -126,9 +88,6 @@ position = Vector2(1152, 0)
 [node name="collision-2d-scoreRight" type="CollisionShape2D" parent="ScoreRight"]
 position = Vector2(27.5, 324)
 shape = SubResource("RectangleShape2D_s34a3")
-
-[node name="Balltimer" type="Timer" parent="."]
-one_shot = true
 
 [node name="HUD" type="Node" parent="."]
 
@@ -267,10 +226,19 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_yt3b0")
 text = "P1 X P2"
 metadata/_edit_group_ = true
 
+[node name="slow_zone" parent="." instance=ExtResource("9_l3ejk")]
+position = Vector2(585, 326)
+
+[node name="Balltimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="SlowZoneTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="ScoreLeft" to="." method="_on_score_left_body_entered"]
 [connection signal="body_entered" from="ScoreRight" to="." method="_on_score_right_body_entered"]
-[connection signal="timeout" from="Balltimer" to="." method="_on_balltimer_timeout"]
 [connection signal="pressed" from="canvas_win_screen/VBoxContainer/button_restartGame" to="." method="_on_button_restart_game_pressed"]
 [connection signal="pressed" from="canvas_win_screen/VBoxContainer/button_backToMenu" to="." method="_on_button_back_to_menu_pressed"]
 [connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXcpu" to="." method="_on_button_player_xcpu_pressed"]
 [connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXplayer" to="." method="_on_button_player_xplayer_pressed"]
+[connection signal="timeout" from="Balltimer" to="." method="_on_balltimer_timeout"]
+[connection signal="timeout" from="SlowZoneTimer" to="slow_zone" method="_on_slow_zone_timer_timeout"]

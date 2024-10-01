@@ -27,8 +27,8 @@ func _process(delta: float) -> void:
 			position.y += get_parent().PADDLE_SPEED * delta
 	
 	
-	#CPU no controle	
-	if $"..".gameModePVE == true:
+	#CPU no controle
+	if $"..".gameModePVE == true and get_parent().get_node("Ball"): #Colocar um sinal para substituir essa Bola
 		ball_pos = $"../Ball".position
 		dist = position.y - ball_pos.y
 		
@@ -38,5 +38,6 @@ func _process(delta: float) -> void:
 			move_by = dist
 		
 		position.y -= move_by
-		
+	else:
+		position.y = win_height / 2
 	position.y = clamp(position.y, paddle_height / 2, win_height - paddle_height / 2)

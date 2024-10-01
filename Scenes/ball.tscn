@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://d05rn7cpfqevi"]
+
+[ext_resource type="Script" path="res://Scripts/ball.gd" id="1_7o5rf"]
+[ext_resource type="Script" path="res://Scripts/trail_effect_ball.gd" id="2_achuh"]
+[ext_resource type="Texture2D" uid="uid://ibk7l56g67bx" path="res://Assets/Ball.png" id="3_0ain1"]
+[ext_resource type="AudioStream" uid="uid://bpsqp0ex2lg8h" path="res://Assets/sfx/hit_sound.wav" id="4_yuejx"]
+
+[sub_resource type="Curve" id="Curve_vj2ug"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_nqndx"]
+colors = PackedColorArray(0.937255, 0.67451, 0.156863, 1, 0.937255, 0.67451, 0.156863, 0.435294)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i5eoq"]
+radius = 18.0
+
+[node name="Ball" type="CharacterBody2D"]
+z_as_relative = false
+position = Vector2(576, 324)
+collision_mask = 3
+script = ExtResource("1_7o5rf")
+
+[node name="trail_line" type="Line2D" parent="."]
+top_level = true
+z_index = -2
+z_as_relative = false
+width = 15.0
+width_curve = SubResource("Curve_vj2ug")
+gradient = SubResource("Gradient_nqndx")
+script = ExtResource("2_achuh")
+max_lenght = 8
+
+[node name="sprite_ball" type="Sprite2D" parent="."]
+texture = ExtResource("3_0ain1")
+
+[node name="collision_2d_ball" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_i5eoq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_yuejx")

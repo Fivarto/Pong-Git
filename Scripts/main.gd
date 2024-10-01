@@ -7,14 +7,24 @@ const PADDLE_SPEED: int = 500
 var gameModePVP: bool = false
 var gameModePVE: bool = false
 
+var ball_scene = preload("res://Scenes/ball.tscn")
+
+
+
+
 func _on_balltimer_timeout() -> void:
+	$SlowZoneTimer.start()
 	$Ball.new_ball()
 
 
 #CPU Score
 func _on_score_left_body_entered(body: Node2D) -> void:
 	score[1] += 1
+	$Ball.queue_free()
 	$"HUD/label-cpuScore".text = str(score[1])
+	
+	
+	
 	$Balltimer.start()
 	
 	if score[1] >= 1:
@@ -26,6 +36,9 @@ func _on_score_left_body_entered(body: Node2D) -> void:
 func _on_score_right_body_entered(body: Node2D) -> void:
 	score[0] += 1
 	$"HUD/label-playerScore".text = str(score[0])
+	
+	$Ball.queue_free()
+	
 	$Balltimer.start()
 	
 	if score[0] >= 1:
@@ -38,6 +51,10 @@ func _on_button_player_xcpu_pressed() -> void:
 	
 	$canvas_gameMode.visible = false
 	gameModePVE = true
+	
+	var instancia = ball_scene.instantiate()
+	add_child(instancia)
+	
 	$Balltimer.start()
 
 #Game Mode Player vs Player Selecionado
@@ -45,6 +62,10 @@ func _on_button_player_xplayer_pressed() -> void:
 	
 	$canvas_gameMode.visible = false
 	gameModePVP = true
+	
+	var instancia = ball_scene.instantiate()
+	add_child(instancia)
+	
 	$Balltimer.start()
 
 
@@ -67,6 +88,9 @@ func _on_button_restart_game_pressed() -> void:
 	
 	$"HUD/label-playerScore".text = str(score[0])
 	$"HUD/label-cpuScore".text = str(score[1])
+	
+	var instancia = ball_scene.instantiate()
+	add_child(instancia)
 	
 	$canvas_win_screen.visible = false
 	$Balltimer.start()

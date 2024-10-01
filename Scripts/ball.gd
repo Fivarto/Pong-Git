@@ -17,10 +17,9 @@ var queue : Array
 @export var max_lenght: int
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	print(speed)
 	win_size = get_viewport_rect().size
 
 func new_ball():
@@ -75,3 +74,6 @@ func new_direction(collider):
 	
 	new_dir.y = (dist / (collider.paddle_height / 2)) * MAX_Y_VECTOR
 	return new_dir.normalized()
+
+func slow_mo():
+	pass
