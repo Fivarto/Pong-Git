@@ -19,6 +19,7 @@ var queue : Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	get_parent().ball_in_scene = true
 	print(speed)
 	win_size = get_viewport_rect().size
 

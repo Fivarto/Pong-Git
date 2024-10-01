@@ -9,7 +9,7 @@ var gameModePVE: bool = false
 
 var ball_scene = preload("res://Scenes/ball.tscn")
 
-
+var ball_in_scene: bool = false
 
 
 func _on_balltimer_timeout() -> void:
@@ -21,6 +21,7 @@ func _on_balltimer_timeout() -> void:
 func _on_score_left_body_entered(body: Node2D) -> void:
 	score[1] += 1
 	$Ball.queue_free()
+	ball_in_scene = false
 	$"HUD/label-cpuScore".text = str(score[1])
 	
 	
@@ -38,7 +39,7 @@ func _on_score_right_body_entered(body: Node2D) -> void:
 	$"HUD/label-playerScore".text = str(score[0])
 	
 	$Ball.queue_free()
-	
+	ball_in_scene = false
 	$Balltimer.start()
 	
 	if score[0] >= 1:
