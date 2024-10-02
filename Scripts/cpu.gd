@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	
 	
 	#CPU no controle
-	if  $"..".gameModePVE == true and get_parent().ball_in_scene == true: #Colocar um sinal para substituir essa Bola
+	if  $"..".gameModePVE == true and get_parent().ball_in_scene == true: 
 		ball_pos = get_parent().get_node("Ball").position
 		dist = position.y - ball_pos.y
 		

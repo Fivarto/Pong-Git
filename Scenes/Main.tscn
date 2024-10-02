@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dn1svo64gv1cm"]
+[gd_scene load_steps=17 format=3 uid="uid://dn1svo64gv1cm"]
 
 [ext_resource type="Texture2D" uid="uid://nr7rktnsh3fe" path="res://Assets/BG-Base.png" id="1_50orh"]
 [ext_resource type="Texture2D" uid="uid://5i7ktlb6qs1u" path="res://Assets/Paddle.png" id="2_7bwke"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://Scripts/player_paddle.gd" id="3_d4p7e"]
 [ext_resource type="FontFile" uid="uid://drxorkkc4esh0" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="4_dqlsp"]
 [ext_resource type="Script" path="res://Scripts/cpu.gd" id="5_06acu"]
-[ext_resource type="PackedScene" uid="uid://bnua3aurn2b7b" path="res://Scenes/slown_zone.tscn" id="9_l3ejk"]
 [ext_resource type="Texture2D" uid="uid://dnw7soktnd5q8" path="res://Assets/score_board.png" id="10_nxx4l"]
 [ext_resource type="Texture2D" uid="uid://coswjkc2kxbwp" path="res://Assets/button_base_sprite.png" id="12_bv8n1"]
 
@@ -226,14 +225,11 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_yt3b0")
 text = "P1 X P2"
 metadata/_edit_group_ = true
 
-[node name="slow_zone" parent="." instance=ExtResource("9_l3ejk")]
-visible = false
-position = Vector2(585, 326)
-
 [node name="Balltimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="SlowZoneTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="body_entered" from="ScoreLeft" to="." method="_on_score_left_body_entered"]
 [connection signal="body_entered" from="ScoreRight" to="." method="_on_score_right_body_entered"]
@@ -242,4 +238,4 @@ one_shot = true
 [connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXcpu" to="." method="_on_button_player_xcpu_pressed"]
 [connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXplayer" to="." method="_on_button_player_xplayer_pressed"]
 [connection signal="timeout" from="Balltimer" to="." method="_on_balltimer_timeout"]
-[connection signal="timeout" from="SlowZoneTimer" to="slow_zone" method="_on_slow_zone_timer_timeout"]
+[connection signal="timeout" from="SlowZoneTimer" to="." method="_on_slow_zone_timer_timeout"]

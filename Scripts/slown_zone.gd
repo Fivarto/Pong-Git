@@ -34,8 +34,3 @@ func _on_body_exited(body):
 		print(body.speed)
 		
 		is_slow = true
-
-
-func _on_slow_zone_timer_timeout():
-	$".".visible = true
-	$CollisionShape2D.disabled = false

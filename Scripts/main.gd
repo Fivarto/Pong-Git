@@ -8,12 +8,17 @@ var gameModePVP: bool = false
 var gameModePVE: bool = false
 
 var ball_scene = preload("res://Scenes/ball.tscn")
+var slowMo_scene = preload("res://Scenes/slown_zone.tscn")
+
 
 var ball_in_scene: bool = false
 
+#Power Up Add
+func _input(event):
+	if event.is_action_pressed("p1_power_up"):
+		$SlowZoneTimer.start()
 
 func _on_balltimer_timeout() -> void:
-	$SlowZoneTimer.start()
 	$Ball.new_ball()
 
 
@@ -96,5 +101,14 @@ func _on_button_restart_game_pressed() -> void:
 	$canvas_win_screen.visible = false
 	$Balltimer.start()
 	
-	$slow_zone.reset_slow_zone()
 	$SlowZoneTimer.start()
+	
+	get_node("SlowMoZone").queue_free()
+
+
+func _on_slow_zone_timer_timeout():
+	
+	
+	var instancia_slow_mo = slowMo_scene.instantiate()
+	instancia_slow_mo.position = Vector2(get_viewport().size.x / 2, get_viewport().size.y / 2 )
+	add_child(instancia_slow_mo)
