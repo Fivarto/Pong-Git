@@ -5,17 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://ibk7l56g67bx" path="res://Assets/Ball.png" id="3_3c41c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w32xq"]
-radius = 66.0681
+radius = 56.0089
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_33ueq"]
 shader = ExtResource("2_8n2x8")
 shader_parameter/color = Vector4(0, 0, 0, 0.5)
-shader_parameter/amplitude = 0.1
-shader_parameter/speed = 1.0
-shader_parameter/radius = 0.5
+shader_parameter/amplitude = 1.0
+shader_parameter/speed = 5.0
+shader_parameter/radius = 0.4
 
 [node name="StaticBody2D" type="Area2D"]
-visible = false
 script = ExtResource("1_jx0bv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

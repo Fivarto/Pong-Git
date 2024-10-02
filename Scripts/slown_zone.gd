@@ -8,6 +8,11 @@ func _ready():
 	
 	old_speed = 500
 
+func reset_slow_zone():
+	
+	$CollisionShape2D.disabled = true
+	$".".visible = false
+
 func _on_body_entered(body):
 	
 	old_speed = get_parent().get_node("Ball").speed

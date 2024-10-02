@@ -227,6 +227,7 @@ text = "P1 X P2"
 metadata/_edit_group_ = true
 
 [node name="slow_zone" parent="." instance=ExtResource("9_l3ejk")]
+visible = false
 position = Vector2(585, 326)
 
 [node name="Balltimer" type="Timer" parent="."]

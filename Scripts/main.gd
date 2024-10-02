@@ -95,3 +95,6 @@ func _on_button_restart_game_pressed() -> void:
 	
 	$canvas_win_screen.visible = false
 	$Balltimer.start()
+	
+	$slow_zone.reset_slow_zone()
+	$SlowZoneTimer.start()
