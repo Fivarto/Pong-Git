@@ -101,9 +101,10 @@ func _on_button_restart_game_pressed() -> void:
 	$canvas_win_screen.visible = false
 	$Balltimer.start()
 	
-	$SlowZoneTimer.start()
+	# $SlowZoneTimer.start()
 	
-	get_node("SlowMoZone").queue_free()
+	if get_node("SlowMoZone"):
+		get_node("SlowMoZone").queue_free()
 
 
 func _on_slow_zone_timer_timeout():
@@ -112,3 +113,8 @@ func _on_slow_zone_timer_timeout():
 	var instancia_slow_mo = slowMo_scene.instantiate()
 	instancia_slow_mo.position = Vector2(get_viewport().size.x / 2, get_viewport().size.y / 2 )
 	add_child(instancia_slow_mo)
+
+
+func _on_button_pressed() -> void:
+	
+	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

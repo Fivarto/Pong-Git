@@ -19,4 +19,7 @@ func _process(delta: float) -> void:
 	elif Input.is_action_pressed("p1_move_down"):
 		position.y += get_parent().PADDLE_SPEED * delta
 	
+	#if Input.is_action_just_pressed("p1_power_up"):
+	#	pass
+	
 	position.y = clamp(position.y, paddle_height / 2, win_height - paddle_height / 2)

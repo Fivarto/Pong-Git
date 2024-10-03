@@ -7,11 +7,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_w32xq"]
 radius = 56.0089
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_33ueq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8vr6j"]
 shader = ExtResource("2_8n2x8")
-shader_parameter/color = Vector4(0, 0, 0, 0.5)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/amplitude = 1.0
-shader_parameter/speed = 5.0
+shader_parameter/speed = 1.0
 shader_parameter/radius = 0.4
 
 [node name="SlowMoZone" type="Area2D"]
@@ -22,8 +22,8 @@ shape = SubResource("CircleShape2D_w32xq")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_33ueq")
-scale = Vector2(3.83333, 3.83333)
+material = SubResource("ShaderMaterial_8vr6j")
+scale = Vector2(3.68, 3.68)
 texture = ExtResource("3_3c41c")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

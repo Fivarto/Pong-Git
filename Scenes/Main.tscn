@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dn1svo64gv1cm"]
+[gd_scene load_steps=24 format=3 uid="uid://dn1svo64gv1cm"]
 
 [ext_resource type="Texture2D" uid="uid://nr7rktnsh3fe" path="res://Assets/BG-Base.png" id="1_50orh"]
 [ext_resource type="Texture2D" uid="uid://5i7ktlb6qs1u" path="res://Assets/Paddle.png" id="2_7bwke"]
@@ -6,11 +6,48 @@
 [ext_resource type="Script" path="res://Scripts/player_paddle.gd" id="3_d4p7e"]
 [ext_resource type="FontFile" uid="uid://drxorkkc4esh0" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="4_dqlsp"]
 [ext_resource type="Script" path="res://Scripts/cpu.gd" id="5_06acu"]
+[ext_resource type="Texture2D" uid="uid://bs6tnp5cb21vo" path="res://Assets/button_pressed_sprite.png" id="9_f0rae"]
 [ext_resource type="Texture2D" uid="uid://dnw7soktnd5q8" path="res://Assets/score_board.png" id="10_nxx4l"]
 [ext_resource type="Texture2D" uid="uid://coswjkc2kxbwp" path="res://Assets/button_base_sprite.png" id="12_bv8n1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_57iq4"]
 size = Vector2(22, 138)
+
+[sub_resource type="Animation" id="Animation_mx3vp"]
+resource_name = "anim_grow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_7d6kp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v50t0"]
+_data = {
+"RESET": SubResource("Animation_7d6kp"),
+"anim_grow": SubResource("Animation_mx3vp")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xtukc"]
 size = Vector2(1152, 20)
@@ -38,6 +75,24 @@ texture_margin_top = 32.0
 texture_margin_right = 32.0
 texture_margin_bottom = 32.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gpwut"]
+texture = ExtResource("12_bv8n1")
+modulate_color = Color(0.647059, 0.384314, 0.262745, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xohp0"]
+texture = ExtResource("9_f0rae")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8p6e2"]
+texture = ExtResource("12_bv8n1")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+
 [node name="Campo-BG" type="Sprite2D"]
 z_index = -10
 texture = ExtResource("1_50orh")
@@ -53,6 +108,11 @@ texture = ExtResource("2_7bwke")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player-Paddle"]
 shape = SubResource("RectangleShape2D_57iq4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player-Paddle"]
+libraries = {
+"": SubResource("AnimationLibrary_v50t0")
+}
 
 [node name="CPU" type="StaticBody2D" parent="."]
 position = Vector2(1102, 324)
@@ -225,6 +285,15 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_yt3b0")
 text = "P1 X P2"
 metadata/_edit_group_ = true
 
+[node name="button_gameMode_back" type="Button" parent="canvas_gameMode/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.670588, 0.427451, 0.313726, 1)
+theme_override_fonts/font = ExtResource("4_dqlsp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gpwut")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xohp0")
+theme_override_styles/normal = SubResource("StyleBoxTexture_8p6e2")
+text = "BACK"
+
 [node name="Balltimer" type="Timer" parent="."]
 one_shot = true
 
@@ -237,5 +306,6 @@ one_shot = true
 [connection signal="pressed" from="canvas_win_screen/VBoxContainer/button_backToMenu" to="." method="_on_button_back_to_menu_pressed"]
 [connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXcpu" to="." method="_on_button_player_xcpu_pressed"]
 [connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_playerXplayer" to="." method="_on_button_player_xplayer_pressed"]
+[connection signal="pressed" from="canvas_gameMode/VBoxContainer/button_gameMode_back" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="Balltimer" to="." method="_on_balltimer_timeout"]
 [connection signal="timeout" from="SlowZoneTimer" to="." method="_on_slow_zone_timer_timeout"]

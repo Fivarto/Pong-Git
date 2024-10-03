@@ -7,6 +7,7 @@ var is_slow: bool = false
 func _ready():
 	
 	old_speed = 500
+	$CollisionShape2D.disabled = false
 
 func reset_slow_zone():
 	
