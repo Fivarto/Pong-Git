@@ -9,7 +9,7 @@ var gameModePVE: bool = false
 
 var ball_scene = preload("res://Scenes/ball.tscn")
 var slowMo_scene = preload("res://Scenes/slown_zone.tscn")
-
+var mole_scene = preload("res://mole.tscn")
 
 var ball_in_scene: bool = false
 
@@ -19,7 +19,15 @@ func _input(event):
 		$SlowZoneTimer.start()
 
 func _on_balltimer_timeout() -> void:
-	$Ball.new_ball()
+	
+	if not get_node("Ball"):
+		var instancia = ball_scene.instantiate()
+		add_child(instancia)
+		
+		$Ball.new_ball()
+	
+	else:
+		$Ball.new_ball()
 
 
 #CPU Score
@@ -33,8 +41,8 @@ func _on_score_left_body_entered(body: Node2D) -> void:
 	
 	$Balltimer.start()
 	
-	if score[1] >= 1:
-		print("CPU ganhou")
+	if score[1] >= 3:
+		$canvas_win_screen/VBoxContainer/label_win_screen.text = str(" A CPU VENCEU")
 		$canvas_win_screen.visible = true
 		$Balltimer.stop()
 
@@ -47,8 +55,8 @@ func _on_score_right_body_entered(body: Node2D) -> void:
 	ball_in_scene = false
 	$Balltimer.start()
 	
-	if score[0] >= 1:
-		print("Player ganhou")
+	if score[0] >= 3:
+		$canvas_win_screen/VBoxContainer/label_win_screen.text = str(" O PLAYER VENCEU")
 		$canvas_win_screen.visible = true
 		$Balltimer.stop()
 
@@ -115,6 +123,16 @@ func _on_slow_zone_timer_timeout():
 	add_child(instancia_slow_mo)
 
 
+#Back to Manu from Player Mode Select
 func _on_button_pressed() -> void:
 	
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
+
+
+#Spawn mole
+func _on_mole_timer_timeout() -> void:
+	
+	
+	var mole_instance = mole_scene.instantiate()
+	mole_instance.position = Vector2(randf_range(get_viewport().size.x , 0), randf_range(get_viewport().size.y, 0))
+	add_child(mole_instance)

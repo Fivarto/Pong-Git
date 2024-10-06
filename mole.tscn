@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://pl6qdr1jadf5"]
+
+[ext_resource type="Texture2D" uid="uid://b1urqgiy00cae" path="res://Assets/toupeira_pop_up.png" id="1_2oqo3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ub3i1"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qacx8"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(80, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38wyo"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(160, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ohkv"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(240, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xplw"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(320, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7n4d"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(400, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rnlyx"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(480, 0, 80, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f8k8g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ub3i1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qacx8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38wyo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ohkv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xplw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7n4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rnlyx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Mole" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_f8k8g")
+autoplay = "default"
+frame_progress = 0.0662332
