@@ -301,6 +301,7 @@ one_shot = true
 one_shot = true
 
 [node name="mole_timer" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 autostart = true
 

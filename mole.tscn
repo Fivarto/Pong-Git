@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://pl6qdr1jadf5"]
+[gd_scene load_steps=13 format=3 uid="uid://pl6qdr1jadf5"]
 
 [ext_resource type="Texture2D" uid="uid://b1urqgiy00cae" path="res://Assets/toupeira_pop_up.png" id="1_2oqo3"]
+[ext_resource type="Script" path="res://Scripts/mole.gd" id="2_uwfh8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ub3i1"]
 atlas = ExtResource("1_2oqo3")
@@ -10,13 +11,13 @@ region = Rect2(0, 0, 80, 64)
 atlas = ExtResource("1_2oqo3")
 region = Rect2(80, 0, 80, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_38wyo"]
-atlas = ExtResource("1_2oqo3")
-region = Rect2(160, 0, 80, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ohkv"]
 atlas = ExtResource("1_2oqo3")
 region = Rect2(240, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38wyo"]
+atlas = ExtResource("1_2oqo3")
+region = Rect2(160, 0, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8xplw"]
 atlas = ExtResource("1_2oqo3")
@@ -40,10 +41,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_qacx8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_38wyo")
+"texture": SubResource("AtlasTexture_8ohkv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8ohkv")
+"texture": SubResource("AtlasTexture_38wyo")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8xplw")
@@ -59,7 +60,30 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2hm75"]
+size = Vector2(46, 44)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n460f"]
+radius = 29.0
+
 [node name="Mole" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_f8k8g")
 autoplay = "default"
-frame_progress = 0.0662332
+frame = 6
+frame_progress = 0.205658
+script = ExtResource("2_uwfh8")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_2hm75")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 9)
+shape = SubResource("CircleShape2D_n460f")
+debug_color = Color(0.825364, 0.37725, 0.344798, 0.42)
+
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
